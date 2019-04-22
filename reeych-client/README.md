@@ -31,41 +31,135 @@ This frontend uses Hygen for templating:
 ### Contexts
 
 One of the concepts that will be implemented and iteratd on in this frontend is the concept of
-contexts. I am not talking about UI stateful context, but contexts as in grouping similar
-functionality together. For instance, a "Authentication" context would include certain network
+contexts, which is essentially an alias for an attribute in the overall store object, and its associated functions.
+For instance, a "Authentication" context would include certain network
 calls and client side validation operations, in order to implement the desired functionlity. In this
-instance, you would create an "Authentication" context, which places utilities & components in the correct
+instance, you would create an "Authentication" context, which places utilities, types, and a store object in the correct
 places.
 
 ex.)
 
-`$> yarn gen:context --name Authentication --schema Auth`
+`$> yarn gen:context --name auth --type Auth --priv true`
 
 Would generate the following files:
 
 ```javascript
 src/
   __tests__/
-    Authentication/
+    auth/
       ... tests ...
 
   ...other dirs...
 
   components/
-    Authentication/
+    auth/
       index.ts
 
   ...more dirs...
 
   lib/
-    Authentication/
+    store/
       index.ts
+      ...others...
+      auth/
+        index.ts // Accumulator for the directory
+        actions.ts
+        reducers.ts
+        authStoreObject.ts
+    types/
+      auth/
+        index.ts
 
 // components/Authentication/index.ts
-/** GraphQL queries/mutations for auth ctx */
-import { queries, mutations } from 'lib/Authentication'
 
-... other code ...
+```
+
+### Utilities
+
+Utilities are the business logic of the frontend application. There are a couple kinds:
+
+-   General (components and functions)
+-   Specific (components and functions)
+
+An example of a general utility component would be a component that takes in a list and
+returns a list of a specifed component type. Ex:
+
+To generate a utility
+`$> yarn gen:util --name ObjectUl --type component --file object-ul --ctx lists`
+~or~
+`$> yarn gen:util:component --name ObjectUl --file object-ul --ctx lists`
+
+Would put the file in:
+
+```javascript
+src / components / util / lists / object - ul.tsx;
+```
+
+Then you could define:
+
+```javascript
+<ObjectUl data={{ a: 'b', c: 'd' }} mode="entries" />
+// Would render:
+//  <ul {...otherprops}>
+//    <li key={'a'}>b</li>
+//    <li key={'b'}>d</li>
+//  </ul>
+
+// Which could also provide a render prop pattern
+<ObjectUl data={{
+  a: { value: 'b', href: '/b'},
+  c: { value: 'd', href: '/d'}
+}} mode="entries" >
+  {(key, value, index) => (
+    <a href={value.href}>{value.value}</a>
+  )}
+</ObjectUl>
+// Would render:
+//  <ul {...otherprops}>
+//    <li key={'a'}>
+//      <a href="/b">b</a>
+//    </li>
+//    <li key={'b'}>
+//      <a href="/d">d</a>
+//    </li>
+//  </ul>
+
+// Example with 'keys' and 'values'
+
+// keys: value will be null, so _ it
+<ObjectUl data={{
+  a: { value: 'b', href: '/b'},
+  c: { value: 'd', href: '/d'}
+}} mode="keys" >
+
+  {(key, _, index) => (
+    <p>{key}</p>
+  )}
+</ObjectUl>
+// Would render:
+//  <ul {...otherprops}>
+//    <li key={'a'}>a</li>
+//    <li key={'b'}>b</li>
+//  </ul>
+
+// value: key will be null, so _ it
+<ObjectUl data={{
+  a: { value: 'b', href: '/b'},
+  c: { value: 'd', href: '/d'}
+}} mode="keys" >
+  {(_, value, index) => (
+    <a href={value.href}>{value.value}</a>
+  )}
+</ObjectUl>
+// Would render:
+//  <ul {...otherprops}>
+//    <li key={0}>
+//      <a href="/b">b</a>
+//    </li>
+//    <li key={1}>
+//      <a href="/d">d</a>
+//    </li>
+//  </ul>
 
 ```
 

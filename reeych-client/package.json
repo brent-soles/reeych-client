@@ -12,7 +12,9 @@
     "dev": "preact watch",
     "lint": "tslint --project src",
     "test": "jest ./tests",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "gen:util:component": "hygen gen util --type component",
+    "gen:util:lib": "hygen gen util --type lib"
   },
   "lint-staged": {
     "*.{js,jsx,css,md,scss}": [
@@ -54,12 +56,11 @@
     "typings-for-css-modules-loader": "^1.7.0"
   },
   "dependencies": {
-    "apollo-boost": "^0.3.1",
     "emotion": "^10.0.9",
     "graphql": "^14.2.1",
-    "graphql-tag": "^2.10.1",
     "preact": "^8.3.1",
     "preact-compat": "^3.18.4",
+    "preact-context-provider": "^1.2.0",
     "preact-emotion": "^9.2.12",
     "preact-router": "^2.6.1"
   },
