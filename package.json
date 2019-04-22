@@ -1,0 +1,10 @@
+{
+  "name": "reeych-client",
+  "version": "0.0.1",
+  "description": "Front end which will power reeych.com - A communication tool for chuches",
+  "main": "src/index.js",
+  "repository": "https://github.com/brent-soles/reeych-client.git",
+  "author": "brent-soles <b.d.soles@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
