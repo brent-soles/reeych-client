@@ -1,27 +1,27 @@
-import { Component, ComponentChildren, h } from 'preact';
+import { Component, h } from 'preact';
+import ListObjectDecider from '../decider/list-object-decider';
 
-type ObjectUlFunction = (key: any, value: any, index: number) => Element;
-
+type ObjectListFunction = (key: any, value: any, index: number) => Element;
 interface ObjectUlProps {
   id?: string;
+  listType: string;
   data: object;
   mode: string;
-  children: ObjectUlFunction[] | ObjectUlFunction;
+  children: ObjectListFunction[] | ObjectListFunction;
 }
 
-
-export default class ObjectUl extends Component<ObjectUlProps, {}> {
+export default class ListFromObject extends Component<ObjectUlProps, {}> {
 
   public render(props: ObjectUlProps, state: any) {
     // Props is either an array or object
-    const { data, mode, children } = props;
+    const { data, listType, mode, children } = props;
     if(typeof data !== 'object') { throw new Error('ObjectUl accepts data of type: array, object'); }
     
-    // Need to have for TS explicitness
+    // Need to have for TS explicitnesn
     const iterator: any = this.decideObjIterator(mode);
     const [childFn, ..._]: any = children; // Kinda hacky?
     return (
-      <ul id={props.id}>
+      <ListObjectDecider listType={listType}>
         {iterator(data).map((element: any, index: number): any => {
           // In preact, children are only an array, so the first
           // child needs to be referenced for the render props
@@ -29,7 +29,7 @@ export default class ObjectUl extends Component<ObjectUlProps, {}> {
           const [key, val, ind] = this.decideArgPass(mode, {element, index});
           return <li key={index}>{childFn(key, val, ind)}</li>;
         })}
-      </ul>
+      </ListObjectDecider>
     );
   }
 

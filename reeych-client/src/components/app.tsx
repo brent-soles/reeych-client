@@ -1,16 +1,20 @@
 import { Component, h } from "preact";
 import { Route, Router, RouterOnChangeArgs } from "preact-router";
 
-import ObjectUl from '../components/util/lists/object-ul'
 import Home from "../routes/home";
 import Profile from "../routes/profile";
 import Header from "./header";
+import ListFromObject from './util/lists/list-from-object'
 
 if ((module as any).hot) {
     // tslint:disable-next-line:no-var-requires
     require("preact/debug");
 }
 
+const data = { 
+  a: { value: 'b', href: '/b'}, 
+  c: { value: 'd', href: '/d'} 
+}
 
 export default class App extends Component<Component, {}> {
     public currentUrl?: string;
@@ -31,15 +35,16 @@ export default class App extends Component<Component, {}> {
                     <Route path="/profile/" component={Profile} user="me" />
                     <Route path="/profile/:user" component={Profile} />
                 </Router> */}
-                <ObjectUl data={{ 
-                  a: { value: 'b', href: '/b'}, 
-                  c: { value: 'd', href: '/d'} 
-                }} mode="entries" >
+                <ListFromObject 
+                  data={data} 
+                  mode="entries" 
+                  listType="ol"
+                >
                   {(key: any, value: any, index: number): any => {
                     console.log(key, value, index);
                     return <a href={value.href}>{key} + {value.value}</a>
                   }}
-                </ObjectUl>
+                </ListFromObject>
             </div>
         );
     }
