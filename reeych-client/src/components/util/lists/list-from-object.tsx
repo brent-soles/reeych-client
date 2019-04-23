@@ -15,7 +15,7 @@ export default class ListFromObject extends Component<ObjectUlProps, {}> {
   public render(props: ObjectUlProps, state: any) {
     // Props is either an array or object
     const { data, listType, mode, children } = props;
-    if(typeof data !== 'object') { throw new Error('ObjectUl accepts data of type: array, object'); }
+    if(typeof data !== 'object') { throw new Error('ListFromObject accepts data of type: array, object'); }
     
     // Need to have for TS explicitnesn
     const iterator: any = this.decideObjIterator(mode);
