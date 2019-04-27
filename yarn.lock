@@ -8311,6 +8311,11 @@ preact-render-to-string@^3.6.3, preact-render-to-string@^3.8.2:
   dependencies:
     pretty-format "^3.5.1"
 
+preact-richtextarea@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/preact-richtextarea/-/preact-richtextarea-1.2.1.tgz#02ade4553d1938a277b85374c8275bc1f612ebcf"
+  integrity sha1-Aq3kVT0ZOKJ3uFN0yCdbwfYS688=
+
 preact-router@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/preact-router/-/preact-router-2.6.1.tgz#eec60a9f2c07a1ae4fbc6604d8a0415742fbbd89"

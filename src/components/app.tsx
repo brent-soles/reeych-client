@@ -1,5 +1,7 @@
 import { Component, h } from "preact";
 import { Route, Router, RouterOnChangeArgs } from "preact-router";
+const Rich = require('preact-richtextarea');
+// import RichTextarea from 'preact-richtextarea';
 
 import Home from "../routes/home";
 import Profile from "../routes/profile";
@@ -18,6 +20,17 @@ const data = {
 
 export default class App extends Component<Component, {}> {
     public currentUrl?: string;
+    private editorText: any = {
+      content: [
+        {
+          text: "hello everyone",
+          styles: [
+            { type: 'bold', from: 0, to: 5 },
+            // { type: 'itialic', from: 6, to: 7}
+          ]
+        }
+      ]
+    };
     public handleRoute = (e: RouterOnChangeArgs) => {
         this.currentUrl = e.url;
     };
